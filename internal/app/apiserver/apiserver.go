@@ -50,6 +50,7 @@ func (s *APIserver) handleHello() http.HandlerFunc {
 		io.WriteString(w, "hello")
 	}
 }
+
 func (s *APIserver) configTask() error {
 	st := db.New(s.config.Task)
 	if err := st.Open(); err != nil {
@@ -60,4 +61,5 @@ func (s *APIserver) configTask() error {
 }
 func (s *APIserver) configureRouter() {
 	s.router.HandleFunc("/hello", s.handleHello())
+	// s.router.HandleFunc()
 }

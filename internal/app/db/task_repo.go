@@ -1,34 +1,37 @@
 package db
 
-import usertask "github.com/AlexSH61/firstRestAPi/internal/app/tasks"
+import (
+	"database/sql"
 
-type Tasks_repo struct {
+	"github.com/AlexSH61/firstRestAPi/internal/app/model"
+)
+
+type Task_repo struct {
 	db *DataBase
 }
 
-
-func (tr *Task_repo) Create(*usertask.Task) error {
-	_, err := r.db.db.Exec("INSERT INTO tasks (title, status) VALUES ($1, $2)", task.Title, task.Status)
-	return err
+func (tr *Task_repo) Create(task *model.Task) (*model.Task, error) {
+	_, err := tr.db.db.Exec("INSERT INTO tasks (title, status) VALUES ($1, $2)", task.Title, task.Status)
+	return nil, err
 }
 
-func (r *Task_repo) Get(IDTask int) (*Task, error) {
-	task := &Task{}
-	err := r.db.db.QueryRow("SELECT id, title, status FROM tasks WHERE id = $1", idTask).Scan(&task.ID, &task.Title, &task.Status)
+func (tr *Task_repo) Get(IDTask int) (*model.Task, error) {
+	task := &model.Task{}
+	err := tr.db.db.QueryRow("SELECT id, title, status FROM tasks WHERE id = $1", IDTask).Scan(&task.IDTask, &task.Title, &task.Status)
 	if err == sql.ErrNoRows {
-		return nil, nil 
+		return nil, nil
 	} else if err != nil {
 		return nil, err
 	}
 	return task, nil
 }
 
-func (r *Task_repo) Update(IDTask int, *usertask.Task) error {
-	_, err := r.db.db.Exec("UPDATE tasks SET title = $1, status = $2 WHERE id = $3", task.Title, task.Status, IDTask)
+func (tr *Task_repo) UpdateTask(task *model.Task) error {
+	_, err := tr.db.db.Exec("UPDATE tasks SET title = $1, status = $2 WHERE id = $3", task.IDTask, task.Status)
 	return err
 }
 
-func (r *Task_repo) Delete(IDTask int) error {
-	_, err := r.db.db.Exec("DELETE FROM tasks WHERE id = $1", IDTask)
+func (tr *Task_repo) Delete(IDTask int) error {
+	_, err := tr.db.db.Exec("DELETE FROM tasks WHERE id = $1", IDTask)
 	return err
 }

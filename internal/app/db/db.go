@@ -10,7 +10,7 @@ type DataBase struct {
 	config   *Config
 	db       *sql.DB
 	userRepo *User_repo
-	taskRepo *Tasks_repo
+	taskRepo *Task_repo
 }
 
 func New(config *Config) *DataBase {
@@ -43,11 +43,11 @@ func (s *DataBase) User() *User_repo {
 	return s.userRepo
 }
 
-func (t *DataBase) Task() *Tasks_repo {
+func (t *DataBase) Task() *Task_repo {
 	if t.taskRepo != nil {
 		return t.taskRepo
 	}
-	t.taskRepo = &Tasks_repo{
+	t.taskRepo = &Task_repo{
 		db: t,
 	}
 	return t.taskRepo
