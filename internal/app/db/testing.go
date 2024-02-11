@@ -6,7 +6,6 @@ import (
 	"testing"
 )
 
-// testing db
 func TestDB(t *testing.T, databaseURL string) (*DataBase, func(...string)) {
 	t.Helper()
 	config := NewConfig()
